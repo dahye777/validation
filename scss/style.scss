@@ -1,71 +1,81 @@
-@import url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css);
+@charset "utf-8";
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@100&display=swap');
 
-*{
+* {
     margin: 0px;
     padding: 0px;
     box-sizing: border-box;
 }
-ul,ol,li{
+
+ul,
+ol,
+li {
     list-style: none;
 }
-a{
+
+a {
     text-decoration: none;
 }
-.hidden{
+
+.hidden {
     position: absolute;
     top: -999999px;
     opacity: 0;
 }
-fieldset{
+
+fieldset {
     border: none;
 }
-#join{
+
+#join {
     width: 100%;
     padding: 150px 0px;
-    
-    .inner{
+
+    .inner {
         width: 1180px;
         margin: 0 auto;
 
-        h1{
-            font: bold 60px/1 'Raleway';
+        h1 {
+            font: bold 60px/1 "Raleway";
             color: #555;
             margin-bottom: 50px;
         }
 
-        table{
+        table {
             border-top: 2px solid #333;
             border-bottom: 2px solid #333;
 
-            th,td{
+            th,
+            td {
                 border-bottom: 1px solid #ddd;
                 padding: 15px 25px;
             }
 
-            th{
+            th {
                 width: 20%;
-                input[type="reset"],
+
+                input[type='reset'],
                 input[type="submit"] {
                     width: 30%;
                     height: 40px;
                     border: 1px solid #333;
-                    font: bold 14px/40px 'arial';
+                    font: bold 14px/40px "arial";
                     color: #555;
                     cursor: pointer;
                     margin: 10px;
 
-                    &:hover{
+                    &:hover {
                         background-color: #333;
                         color: #fff;
                     }
                 }
             }
 
-            td{
+            td {
                 border-left: 1px solid #aaa;
                 position: relative;
 
-                #toggleBtn{
+                #toggleBtn {
                     position: absolute;
                     top: 32px;
                     right: 50%;
@@ -79,20 +89,21 @@ fieldset{
                     justify-content: center;
                     align-items: center;
 
-                    &::before{
+                    &::before {
                         content: '\f06e';
                         font-family: fontAwesome;
                     }
 
-                    &.hide::before{
+                    &.hide::before {
                         content: '\f070';
                         font-family: fontAwesome;
                     }
 
                 }
+
                 input[type="text"],
                 input[type="password"],
-                select{
+                select {
                     position: relative;
                     width: 40%;
                     background-color: rgba(0, 0, 0, 0.03);
@@ -101,11 +112,11 @@ fieldset{
                 }
 
                 input[type="radio"],
-                input[type="checkbox"]{
+                input[type="checkbox"] {
                     margin-right: 30px;
                 }
 
-                textarea{
+                textarea {
                     resize: none;
                     width: 60%;
                     height: 150px;
@@ -113,14 +124,13 @@ fieldset{
                     padding: 10px;
                     border: 1px solid #aaa;
                 }
-                
-                // 동적으로 생성될 에러메세지 스타일
-                p{
-                    font: 11px/1 '맑은 고딕';
-                    color: salmon;
+
+                //동적으로 생성될 에러메세지 스타일
+                p {
+                    font: 11px/1 "맑은 고딕";
+                    color: hotpink;
                     margin-top: 5px;
                 }
-
             }
         }
     }
