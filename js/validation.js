@@ -14,14 +14,18 @@ let toggleBtn = document.getElementById("toggleBtn");
 let pwd = document.querySelector("#pwd1");
 
 btnSubmit.addEventListener("click", (e) => {
-    e.preventDefault();
     //인증함수들을 거쳐서 ture혹은 false를 가지고 validation을 진행
     if (!isText("userid", 5)) e.preventDefault();
     if (!isText("comments", 20)) e.preventDefault();
     if (!isEmail("email")) e.preventDefault();
+
+    if (!isCheck("gender")) e.preventDefault();
+    if (!isCheck("hobby")) e.preventDefault();
+
+    if (!isSelect("edu")) e.preventDefault();
+
+    if (!isPwd("pwd1", "pwd2", 5)) e.preventDefault();
 })
-
-
 //1. type이 text인  form요소의 인증함수
 function isText(el, len) {
     //만약 len이라는 초기값을 설정하지 않았을경우를 대비해서 오류를 사전대비하는 코드
@@ -34,10 +38,6 @@ function isText(el, len) {
     let txt = input.value;
     console.log(txt);
     //찾은 input의 안에 사용자가 적은 값을 변수로 저장합니다
-
-
-    let ggg = input.closest("td");
-    console.log(ggg);
 
     if (txt.length >= len) {
         //일단 에러메세지를 담은 p요소가 있는지는 판별합니다
@@ -57,7 +57,6 @@ function isText(el, len) {
         return false;
     }
 }
-
 //2. type이 text인데 email인증함수
 function isEmail(el) {
     let input = form.querySelector(`[name=${el}]`);
@@ -80,56 +79,148 @@ function isEmail(el) {
         return false;
     }
 }
-
-
-
-
-
-// function isEmail(el) {
-//     let input = form.querySelector(`[name=${el}]`);
-//     let txt = input.value;
-
-//     //@가 있는지 없는지?
-//     if (/@/.test(txt)) {
-//         const errMsgs = input.closest("td").querySelectorAll("p");
-//         // 있다면 제거하고
-//         if (errMsgs.length > 0) input.closest("td").querySelector("p").remove();
-//         return true;
-//     } else {
-//         const errMsgs = input.closest("td").querySelectorAll("p");
-//         // 있다면 제거하고
-//         if (errMsgs.length > 0) return false;
-//         const errMsg = document.createElement("p");
-//         errMsg.append("@를 포함한 전체 이메일 주소를 입력하세요");
-//         input.closest("td").append(errMsg);
-//         return false;
-//     }
-// }
-
-// 3. checkbox인증함수
+//3. checkbox인증함수
 function isCheck(el) {
     let input = form.querySelectorAll(`[name=${el}]`);
     let isCheck = false;
 
-    // check가 되어있는지를 추적하는 코드, 하나라도 체크가 되어있다면??
-    for(let el of input){
-        if(el.checked) isCheck = true;
+    //check가 되어있는지는 추적하는 코드 , 하나라도 체크가 되어있다면??
+    for (let el of input) {
+        if (el.checked) isCheck = true;
     }
 
-    if(isCheck){
+    if (isCheck) {
         const isErrMsg = input[0].closest("td").querySelectorAll("p");
-        if(isErrMsg.length > 0) input[0].closest("td").querySelector("p").remove();
+        if (isErrMsg.length > 0) input[0].closest("td").querySelector("p").remove();
         return true;
-    }else{
+    } else {
         const isErrMsg = input[0].closest("td").querySelectorAll("p");
-        if(isErrMsg.length > 0) return false;
+        if (isErrMsg.length > 0) return false;
 
         const errMsg = document.createElement("p");
         errMsg.append("필수 입력항목을 체크해주세요");
         input[0].closest("td").append(errMsg);
         return false;
     }
+
 }
+//4. select 인증함수
+function isSelect(el) {
+    let sel = form.querySelector(`[name=${el}]`);
+    let sel_index = sel.options.selectedIndex;
+    // select요소에 접근해서 자식요소인 option들 중에 선택이 되어진 index를
+    //찾아서 해당인덱스값을 변수로 담아줍니다
+    let val = sel[sel_index].value;
+
+    if (val !== "") {
+        const isErrMsg = sel.closest("td").querySelectorAll("p");
+        if (isErrMsg.length > 0) sel.closest("td").querySelector("p").remove();
+        return true;
+    } else {
+        const isErrMsg = sel.closest("td").querySelectorAll("p");
+        if (isErrMsg.length > 0) return false;
+
+        const errMsg = document.createElement("p");
+        errMsg.append("항목을 선택해 주세요");
+        sel.closest("td").append(errMsg);
+        return false;
+    }
+}
+/*
+정규표현식???
+- 특정한 문자열 즉 개발자가 원하는 문자를 집합으로 표현하기 위해서 사용하는 형식언어
+*/
+//5. password인증함수 - 1
+// function isPwd(el1, el2, len) {
+//     let pwd1 = form.querySelector(`[name=${el1}]`);
+//     let pwd2 = form.querySelector(`[name=${el2}]`);
+//     let pwd1_val = pwd1.value;
+//     let pwd2_val = pwd2.value;
+//     //숫자, 문자(영어), 특수문자 조건을 정규표현식으로 변수로 저장합니다
+//     const num = /[0-9]/;
+//     const eng = /[a-zA-Z]/;
+//     const spc = /[~!@#$%^&*()_+?><]/;
+//     //1. 두개의 비밀번호가 같아야합니다 그리고 2. 비밀번호의 글자수가 len개 이상
+//     //그리고 3. 비밀번호에 num이 포함 그리고 4. 비밀번호에 eng가 포함
+//     //그리고 5. 비밀번호에 spc가 포함
+//     /*true || true = true
+//     true || false = true 자리가 뒤바뀌어도 같음
+//     false || false = false
+//     true && true = true
+//     true && false = false 
+//     false && false = false*/
+//     if (pwd1_val === pwd2_val && pwd1_val.length >= len && num.test(pwd1_val) && eng.test(pwd1_val) && spc.test(pwd1_val)) {
+//         const isErrMsg = pwd1.closest("td").querySelectorAll("p");
+//         if (isErrMsg.length > 0) pwd1.closest("td").querySelector("p").remove();
+//         return true;
+//     } else {
+//         const isErrMsg = pwd1.closest("td").querySelectorAll("p");
+//         if (isErrMsg.length > 0) return false;
+
+//         const errMsg = document.createElement("p");
+//         errMsg.append(`비밀번호는 ${len}글자 이상, 영문, 숫자, 특수문자를 포함하여 동일하게 입력하세요`);
+//         pwd1.closest("td").append(errMsg);
+//         return false;
+//     }
+// }
+
+//5. password인증함수 - 2
+function isPwd(el1, el2, len) {
+    let pwd1 = form.querySelector(`[name=${el1}]`);
+    let pwd2 = form.querySelector(`[name=${el2}]`);
+    let pwd1_val = pwd1.value;
+    let pwd2_val = pwd2.value;
+    //숫자, 문자(영어), 특수문자 조건을 정규표현식으로 변수로 저장합니다
+    const num = /[0-9]/;
+    const eng = /[a-zA-Z]/;
+    const spc = /[~!@#$%^&*()_+?><]/;
+
+    const errMsgWrap = pwd1.closest("td");
+
+    //오류메세지를 제거하는 함수
+    function removeErrMsg() {
+        const errMsg = errMsgWrap.querySelector("p");
+        if (errMsg) {
+            errMsg.remove();
+        }
+    }
+    //오류메세지를 추가하는 함수
+    function addErrMsg(msg) {
+        const errMsg = document.createElement("p");
+        errMsg.textContent = msg;
+        errMsgWrap.append(errMsg);
+    }
+
+    if (
+        pwd1_val === pwd2_val &&
+        pwd1_val.length >= len &&
+        num.test(pwd1_val) &&
+        eng.test(pwd1_val) &&
+        spc.test(pwd1_val)) {
+        removeErrMsg();
+        return true;
+    } else {
+        removeErrMsg();
+        let err = "비밀번호는 ";
+        if (pwd1_val.length < len) {
+            err += `${len}글자 이상,`;
+        }
+        if (!num.test(pwd1_val)) {
+            err += "숫자를 포함,";
+        }
+        if (!eng.test(pwd1_val)) {
+            err += "영문을 포함,"
+        }
+        if (!spc.test(pwd1_val)) {
+            err += "특수문자를 포함,"
+        }
+        err += "동일하게 입력하세요";
+        addErrMsg(err);
+        return false;
+    }
+
+}
+
 
 
 toggleBtn.addEventListener("click", () => {
