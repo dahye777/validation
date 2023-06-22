@@ -189,6 +189,13 @@ function isPwd(el1, el2, len) {
         const errMsg = document.createElement("p");
         errMsg.textContent = msg;
         errMsgWrap.append(errMsg);
+        /*
+        textContent : 내부에 컨텐츠를 넣는 것 <- 가장 최신, 좋은 방법
+        append로 text를 넣는 것
+        innerText로 text를 넣는 것
+        innerHTML로 넣는 것 <- 최악의 단점 : 보안이 좋지 않음, XCC(크로스 사이트 스크립팅)
+        보안이 필요한 validation에서는 지양해야한다
+        */
     }
 
     if (
